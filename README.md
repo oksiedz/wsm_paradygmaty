@@ -1,1 +1,1 @@
-# wsm_paradygmaty
+Repository for subject Paradigmats of programming.
