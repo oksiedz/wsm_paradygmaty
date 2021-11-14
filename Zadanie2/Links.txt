@@ -1,0 +1,4 @@
+https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
+http://www.algorytm.edu.pl/algorytmy-maturalne/onp
+https://eduinf.waw.pl/inf/alg/001_search/0102.php
+http://www.algorytm.org/algorytmy-arytmetyczne/odwrotna-notacja-polska/onp-1-c.html
