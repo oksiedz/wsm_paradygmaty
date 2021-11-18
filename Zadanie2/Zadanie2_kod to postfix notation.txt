@@ -31,7 +31,7 @@ class Stos
         cout << "zwalniam obiekt" << endl;
     }
     
-    void put(char a) //funkcja dodajaca element i zwrocenie go ze szczytu stosu
+    void put(typ a) //funkcja dodajaca element i zwrocenie go ze szczytu stosu
     {
         typ *ntab = new typ[ile + 1];
         for (int i = 0; i<ile; i++)
@@ -45,7 +45,7 @@ class Stos
         elementy = ntab;
     }
     
-    char get()//funkcja zwracajca element ze stosu
+    typ get()//funkcja zwracajca element ze stosu
     {
         //zdejmuje ze stosu i zmniejsza rozmiar
         typ wynik = elementy[ile-1]; //ostatni znak z obecnej tablicy pobieramy i go potem zwrócimy
@@ -61,7 +61,7 @@ class Stos
         return wynik; //zwrócenie wyniku
     }
     
-    char top() //funkcja zwaracająca wierzchołek stosu
+    typ top() //funkcja zwaracająca wierzchołek stosu
     {
         return elementy[ile-1];
     }
@@ -103,7 +103,7 @@ int prec(char c) {
         return -1;
 }
 
-int czyliczba(char a)
+int isnumber(char a)
 {
     if (a == '0'|| a == '1' || a == '2' || a == '3' || a == '4' || a == '5' || a == '6' || a == '7' || a == '8' || a == '9')
     {
@@ -141,69 +141,69 @@ int isoperator (char a)
 
 int incorrectstring(string a)
 {
-    int wynik = 0;
+    int result = 0;
     for (int i = 0; i < a.length(); i++)
     {
         if (
             (a[i] == ' ' && a[i+1] == ' ') || (isoperator(a[i]) == 1 && isoperator(a[i+1]) == 1) || (isbracket(a[i]) == 1 && isbracket(a[i+1]) == 1)
-            || (czyliczba(a[i]) == 1 && isoperator(a[i+1]) == 1) || (isoperator(a[i]) == 1 && czyliczba(a[i+1]) == 1)
-            || (czyliczba(a[i]) == 1 && isbracket(a[i+1]) == 1) || (isoperator(a[i]) == 1 && isbracket(a[i+1]) == 1)
+            || (isnumber(a[i]) == 1 && isoperator(a[i+1]) == 1) || (isoperator(a[i]) == 1 && isnumber(a[i+1]) == 1)
+            || (isnumber(a[i]) == 1 && isbracket(a[i+1]) == 1) || (isoperator(a[i]) == 1 && isbracket(a[i+1]) == 1)
             )
         {
-            wynik = 1;
+            result = 1;
         }
         else
         {
-            wynik = wynik;
+            result = result;
         }
     }
-    return wynik;
+    return result;
 }
 
-string checknegativeatbegining(string intextin)
+string checknegativeatbegining(string a)
 {
-    string intext = "";
+    string outtext = "";
     int i = 0;
-    while (i < intextin.length())
+    while (i < a.length())
     {
         //- 2 
-        if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 0)
+        if(i == 0 && a[0] == '-' && isnumber(a[2]) == 1 && isnumber(a[3]) == 0)
         {
-            intext = intext + '(' + ' '+ '0' + ' ' + intextin[0] + ' ' + intextin[2] + ' ' + ')';
+            outtext = outtext + '(' + ' '+ '0' + ' ' + a[0] + ' ' + a[2] + ' ' + ')';
             i = 3;
         }
         //- 22 
-        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 0)
+        else if(i == 0 && a[0] == '-' && isnumber(a[2]) == 1 && isnumber(a[3]) == 1 && isnumber(a[4]) == 0)
         {
-            intext = intext + '(' + ' ' + '0'+ ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + ' ' + ')';
+            outtext = outtext + '(' + ' ' + '0'+ ' ' + a[0] + ' ' + a[2] + a[3] + ' ' + ')';
             i = 4;
         }
         //- 222
-        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 1 && czyliczba(intextin[5]) == 0)
+        else if(i == 0 && a[0] == '-' && isnumber(a[2]) == 1 && isnumber(a[3]) == 1 && isnumber(a[4]) == 1 && isnumber(a[5]) == 0)
         {
-            intext = intext + '(' + ' ' + '0' + ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + intextin[4] + ' ' + ')';
+            outtext = outtext + '(' + ' ' + '0' + ' ' + a[0] + ' ' + a[2] + a[3] + a[4] + ' ' + ')';
             i = 5;
         }
         //- 2222
-        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 1 && czyliczba(intextin[5]) == 1 && czyliczba(intextin[6]) == 0)
+        else if(i == 0 && a[0] == '-' && isnumber(a[2]) == 1 && isnumber(a[3]) == 1 && isnumber(a[4]) == 1 && isnumber(a[5]) == 1 && isnumber(a[6]) == 0)
         {
-            intext = intext + '(' + ' ' + '0' + ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + intextin[4] + intextin[5] + ' ' + ')';
+            outtext = outtext + '(' + ' ' + '0' + ' ' + a[0] + ' ' + a[2] + a[3] + a[4] + a[5] + ' ' + ')';
             i = 6;
         }
         //- 22222
-        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 1 && czyliczba(intextin[5]) == 1 && czyliczba(intextin[6]) == 1 && czyliczba(intextin[7]) == 0)
+        else if(i == 0 && a[0] == '-' && isnumber(a[2]) == 1 && isnumber(a[3]) == 1 && isnumber(a[4]) == 1 && isnumber(a[5]) == 1 && isnumber(a[6]) == 1 && isnumber(a[7]) == 0)
         {
-            intext = intext + '(' + ' ' + '0' + ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + intextin[4] + intextin[5] + intextin[6] + ' ' + ')';
+            outtext = outtext + '(' + ' ' + '0' + ' ' + a[0] + ' ' + a[2] + a[3] + a[4] + a[5] + a[6] + ' ' + ')';
             i = 7;
         }
         else
         {
-            intext = intext + intextin[i];
+            outtext = outtext + a[i];
             i = i + 1;
         }
     }
     
-    return intext;
+    return outtext;
 }
 
 string checknegativeinsideofstring(string a)
@@ -213,55 +213,102 @@ string checknegativeinsideofstring(string a)
     while (i < a.length())
     {
         //negative number after left bracket (so something like ( - 3 ))
-        if (a[i] == '(' && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && a[i + 5] == ' ')
+        if (a[i] == '(' && a[i+2] == '-' && isnumber(a[i+4]) == 1 && a[i + 5] == ' ')
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + ')';
             i = i + 5;
         }
         //( - 33 )
-        else if (a[i] == '(' && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && a[i + 6] == ' ')
+        else if (a[i] == '(' && a[i+2] == '-' && isnumber(a[i+4]) == 1 && isnumber(a[i+5]) == 1 && a[i + 6] == ' ')
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + ')';
             i = i + 6;
         }
         //( - 333 )
-        else if (a[i] == '(' && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && czyliczba(a[i + 6]) == 1 && a[i + 7] == ' ')
+        else if (a[i] == '(' && a[i+2] == '-' && isnumber(a[i+4]) == 1 && isnumber(a[i+5]) == 1 && isnumber(a[i + 6]) == 1 && a[i + 7] == ' ')
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + a[i+7] + ')';
             i = i + 7;
         }
         //negative number after operator so something like * - 3
-        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && a[i+5] == ' ')
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && isnumber(a[i+4]) == 1 && a[i+5] == ' ')
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + ')';
             i = i + 5;
         }
-        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && (i+5 == a.length()))
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && isnumber(a[i+4]) == 1 && (i+5 == a.length()))
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + ' ' + ')';
             i = i + 5;
         }
-        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 and a[i+6] == ' ')
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && isnumber(a[i+4]) == 1 && isnumber(a[i+5]) == 1 and a[i+6] == ' ')
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + ')';
             i = i + 6;
         }
-        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && i+6 == a.length())
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && isnumber(a[i+4]) == 1 && isnumber(a[i+5]) == 1 && i+6 == a.length())
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + ' ' + ')';
             i = i + 6;
         }
-        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && czyliczba(a[i+6]) == 1 and a[i+7] == ' ')
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && isnumber(a[i+4]) == 1 && isnumber(a[i+5]) == 1 && isnumber(a[i+6]) == 1 and a[i+7] == ' ')
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + a[i+7] + ')';
             i = i + 7;
         }
-        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && czyliczba(a[i+6]) == 1 && i+7 == a.length())
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && isnumber(a[i+4]) == 1 && isnumber(a[i+5]) == 1 && isnumber(a[i+6]) == 1 && i+7 == a.length())
         {
             outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + ' ' + ')';
             i = i + 7;
         }
         else 
+        {
+            outstring = outstring + a[i];
+            i = i + 1;
+        }
+    }
+    
+    return outstring;
+}
+
+string stringbeautifier(string a)
+{
+    string outstring = "";
+    int i = 0;
+    
+    while (i < a.length())
+    {
+        if (isnumber(a[i]) == 1 && isoperator(a[i+1]) == 1)
+        {
+            outstring = outstring + a[i] + ' ';
+            i = i + 1;
+        }
+        else if (isoperator(a[i]) == 1 && isoperator(a[i+1]) == 1)
+        {
+            outstring = outstring + a[i] + ' ';
+            i = i + 1;
+        }
+        else if (a[i] == ' ' && a[i+1] == ' ' && a[i+2] == ' ' && a[i+3] != ' ')
+        {
+            outstring = outstring + a[i];
+            i = i + 3;
+        }
+        else if (a[i] == ' ' && a[i+1] == ' ' && a[i+2] == ' ' && a[i+3] == ' ')
+        {
+            outstring = outstring + a[i];
+            i = i + 4;
+        }
+        else if (a[i] == ' ' && a[i+1] == ' ' && a[i+2] != ' ')
+        {
+            outstring = outstring + a[i];
+            i = i + 2;
+        }
+        else if(i == 0 && a[i] == ' ')
+        {
+            outstring == outstring;
+            i = i + 1;
+        }
+        else
         {
             outstring = outstring + a[i];
             i = i + 1;
@@ -282,16 +329,16 @@ string infixToPostfix(string intextin)
         char c = intext[i];
         if (c != ' ')
         {
-            if(czyliczba(c) == 1 && czyliczba(intext[i+1]) == 0)
+            if(isnumber(c) == 1 && isnumber(intext[i+1]) == 0)
             {
                 outtext = outtext + c;
             }
-            if (czyliczba(c) == 1 && czyliczba(intext[i+1]) == 1 && czyliczba(intext[i+2]) == 0)
+            if (isnumber(c) == 1 && isnumber(intext[i+1]) == 1 && isnumber(intext[i+2]) == 0)
             {
                 outtext = outtext + c + intext[i+1];
                 i = i + 2;
             }
-            if (czyliczba(c) == 1 && czyliczba(intext[i+1]) == 1 && czyliczba(intext[i+2]) == 1)
+            if (isnumber(c) == 1 && isnumber(intext[i+1]) == 1 && isnumber(intext[i+2]) == 1)
             {
                 outtext = outtext + c + intext[i+1] + intext[i+2];
                 i = i + 3;
@@ -331,51 +378,89 @@ string infixToPostfix(string intextin)
 		wskStos -> get();
 	}
     
-    string outtext2 = "";
-    int i = 0;
+    string outtext2 = stringbeautifier(outtext);
     
-    while (i < outtext.length())
+    cout << "Input string presented in postfix notation:"<< outtext2 << "." << endl;
+    return outtext;
+}
+
+float calculation (float a, float b, char oper)
+{
+    switch(oper)
+	{
+		case '+': 
+			return a + b;
+		case '-': 
+			return a - b;
+		case '*': 
+			return a * b;
+		case '/': 
+			if (b != 0)
+			{
+			    return a / b;//dzielenie całkowite    
+			}
+			else
+			{
+			    cout << "Division by zero error." << endl;
+			    return 0;
+			}
+		case '^':
+		    return pow(a, b);
+	}
+	cout<<"Incorrect operator error.";
+	return 0;
+}
+
+//modification of string of digits to number
+int str_to_int(string a, int &loc) 
+{
+	int number = 0;
+	while(loc < a.size() && isnumber(a[loc]) == 1)
+	{
+		//schemat Hornera
+		number = number * 10 + a[loc] - '0';
+		++loc;
+	}
+	--loc;
+	return number;
+}
+
+void reversepolishnotation(string a)
+{
+    Stos<float> *wskStos = new Stos<float>(0);
+    float num1 = 0, num2 = 0;
+    
+    for (int i = 0; i < a.size(); i++)
     {
-        if (czyliczba(outtext[i]) == 1 && isoperator(outtext[i+1]) == 1)
+        if(isnumber(a[i]) == 1)
         {
-            outtext2 = outtext2 + outtext[i] + ' ';
-            i = i + 1;
-        }
-        else if (isoperator(outtext[i]) == 1 && isoperator(outtext[i+1]) == 1)
-        {
-            outtext2 = outtext2 + outtext[i] + ' ';
-            i = i + 1;
-        }
-        else if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] == ' ' && outtext[i+3] != ' ')
-        {
-            outtext2 = outtext2 + outtext[i];
-            i = i + 3;
-        }
-        else if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] == ' ' && outtext[i+3] == ' ')
-        {
-            outtext2 = outtext2 + outtext[i];
-            i = i + 4;
-        }
-        else if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] != ' ')
-        {
-            outtext2 = outtext2 + outtext[i];
-            i = i + 2;
-        }
-        else if(i == 0 && outtext[i] == ' ')
-        {
-            outtext2 == outtext2;
-            i = i + 1;
+            wskStos -> put(str_to_int(a, i));
         }
         else
         {
-            outtext2 = outtext2 + outtext[i];
-            i = i + 1;
+            if (isoperator(a[i]) == 1)
+            {
+                if (wskStos -> size() < 2)
+                {
+                    cout << "Incorrect equation in Reverse Polish Notation." << endl;
+                }
+                num1 = wskStos -> top();
+                wskStos -> get();
+                num2 = wskStos -> top();
+                wskStos -> get();
+                wskStos -> put(calculation(num2, num1, a[i]));
+                cout << "num1:" << num1 << ", num2:" << num2 <<", a[i]:" << a[i] << ", wynik:" << wskStos -> top()<< "." << endl;
+            }
         }
     }
     
-    cout << "outtext:"<< outtext << endl;
-    cout << "outtext2:"<< outtext2 << endl;
-    return outtext;
+    //if on stack there are less or just 1 element
+    if (wskStos -> size() != 1)
+    {
+        cout << "Incorrect equation in Reverse Polish Notation." << endl;
+    }
+    
+    cout << "Output value from provided input string calculated with usage of infix to postfix transformation and reverse polish notation algorith is equal: " << wskStos -> top() << "."<<endl;
 }
 
 int main() {
@@ -383,7 +468,9 @@ int main() {
     string input = "- 2 ^ 2 * 2 - 3 * 4 + 2 - 3 ^ ( - 3 )";
     if(incorrectstring(input) == 0)
     {
+        cout << "Inserted string:" << input <<"." << endl;
         string exp2 = infixToPostfix(input);
+        reversepolishnotation(exp2);
     }
     else
     {
