@@ -105,7 +105,7 @@ int prec(char c) {
 
 int czyliczba(char a)
 {
-    if (a == '0'||a=='1'||a=='2'||a=='3'||a=='4'||a=='5'||a=='6'||a=='7'||a=='8'||a=='9')
+    if (a == '0'|| a == '1' || a == '2' || a == '3' || a == '4' || a == '5' || a == '6' || a == '7' || a == '8' || a == '9')
     {
         return 1;
     }
@@ -115,26 +115,86 @@ int czyliczba(char a)
     }
 }
 
+int isbracket(char a)
+{
+    if (a == '(' || a == ')')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int isoperator (char a)
+{
+    if(a =='+'|| a == '^'|| a == '/' || a=='*'|| a == '+' || a == '-')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int incorrectstring(string a)
+{
+    int wynik = 0;
+    for (int i = 0; i < a.length(); i++)
+    {
+        if (
+            (a[i] == ' ' && a[i+1] == ' ') || (isoperator(a[i]) == 1 && isoperator(a[i+1]) == 1) || (isbracket(a[i]) == 1 && isbracket(a[i+1]) == 1)
+            || (czyliczba(a[i]) == 1 && isoperator(a[i+1]) == 1) || (isoperator(a[i]) == 1 && czyliczba(a[i+1]) == 1)
+            || (czyliczba(a[i]) == 1 && isbracket(a[i+1]) == 1) || (isoperator(a[i]) == 1 && isbracket(a[i+1]) == 1)
+            )
+        {
+            wynik = 1;
+        }
+        else
+        {
+            wynik = wynik;
+        }
+    }
+    return wynik;
+}
+
 string checknegativeatbegining(string intextin)
 {
     string intext = "";
     int i = 0;
     while (i < intextin.length())
     {
-        if(i == 0 && intextin[0] == '-' && czyliczba(intextin[1]) == 1 && czyliczba(intextin[2]) == 0)
+        //- 2 
+        if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 0)
         {
-            intext = intext + '(' + ' '+ '0' + intextin[0] + ' ' + intextin[1] + ' ' + ')';
-            i = 2;
-        }
-        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[1]) == 1 && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 0)
-        {
-            intext = intext + '(' + ' ' + '0' + intextin[0] + ' ' + intextin[1] + intextin[2] + ' ' + ')';
+            intext = intext + '(' + ' '+ '0' + ' ' + intextin[0] + ' ' + intextin[2] + ' ' + ')';
             i = 3;
         }
-        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[1]) == 1 && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 0)
+        //- 22 
+        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 0)
         {
-            intext = intext + '(' + ' ' + '0' + intextin[0] + ' ' + intextin[1] + intextin[2] + intextin[3] + ' ' + ')';
+            intext = intext + '(' + ' ' + '0'+ ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + ' ' + ')';
             i = 4;
+        }
+        //- 222
+        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 1 && czyliczba(intextin[5]) == 0)
+        {
+            intext = intext + '(' + ' ' + '0' + ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + intextin[4] + ' ' + ')';
+            i = 5;
+        }
+        //- 2222
+        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 1 && czyliczba(intextin[5]) == 1 && czyliczba(intextin[6]) == 0)
+        {
+            intext = intext + '(' + ' ' + '0' + ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + intextin[4] + intextin[5] + ' ' + ')';
+            i = 6;
+        }
+        //- 22222
+        else if(i == 0 && intextin[0] == '-' && czyliczba(intextin[2]) == 1 && czyliczba(intextin[3]) == 1 && czyliczba(intextin[4]) == 1 && czyliczba(intextin[5]) == 1 && czyliczba(intextin[6]) == 1 && czyliczba(intextin[7]) == 0)
+        {
+            intext = intext + '(' + ' ' + '0' + ' ' + intextin[0] + ' ' + intextin[2] + intextin[3] + intextin[4] + intextin[5] + intextin[6] + ' ' + ')';
+            i = 7;
         }
         else
         {
@@ -146,14 +206,76 @@ string checknegativeatbegining(string intextin)
     return intext;
 }
 
+string checknegativeinsideofstring(string a)
+{
+    string outstring = "";
+    int i = 0;
+    while (i < a.length())
+    {
+        //negative number after left bracket (so something like ( - 3 ))
+        if (a[i] == '(' && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && a[i + 5] == ' ')
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + ')';
+            i = i + 5;
+        }
+        //( - 33 )
+        else if (a[i] == '(' && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && a[i + 6] == ' ')
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + ')';
+            i = i + 6;
+        }
+        //( - 333 )
+        else if (a[i] == '(' && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && czyliczba(a[i + 6]) == 1 && a[i + 7] == ' ')
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + a[i+7] + ')';
+            i = i + 7;
+        }
+        //negative number after operator so something like * - 3
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && a[i+5] == ' ')
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + ')';
+            i = i + 5;
+        }
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && (i+5 == a.length()))
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + ' ' + ')';
+            i = i + 5;
+        }
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 and a[i+6] == ' ')
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + ')';
+            i = i + 6;
+        }
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && i+6 == a.length())
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + ' ' + ')';
+            i = i + 6;
+        }
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && czyliczba(a[i+6]) == 1 and a[i+7] == ' ')
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + a[i+7] + ')';
+            i = i + 7;
+        }
+        else if (isoperator(a[i]) == 1 && a[i+2] == '-' && czyliczba(a[i+4]) == 1 && czyliczba(a[i+5]) == 1 && czyliczba(a[i+6]) == 1 && i+7 == a.length())
+        {
+            outstring = outstring + a[i] + ' ' + '(' + ' ' + '0' + ' ' + a[i+2] + a[i+3] + a[i+4] + a[i+5] + a[i+6] + ' ' + ')';
+            i = i + 7;
+        }
+        else 
+        {
+            outstring = outstring + a[i];
+            i = i + 1;
+        }
+    }
+    
+    return outstring;
+}
+
 string infixToPostfix(string intextin)
 {
     Stos<char> *wskStos = new Stos<char>(0);
     string outtext = "";
-    string intext = checknegativeatbegining(intextin);
-    
-    
-    cout << "intext:" << intext << endl;
+    string intext = checknegativeinsideofstring(checknegativeatbegining(intextin));
     
     for (int i = 0; i < intext.length(); i++)
     {
@@ -187,7 +309,7 @@ string infixToPostfix(string intextin)
 		    	}
 		    	wskStos -> get();
 	    	}
-	    	if (c =='+'||c == '^'||c == '/' || c=='*'||c == '+' || c == '-') 
+	    	if (isoperator(c) == 1) 
 	    	{
 			    while(!wskStos -> empty() && prec(intext[i]) <= prec(wskStos -> top())) 
 			    {
@@ -214,21 +336,25 @@ string infixToPostfix(string intextin)
     
     while (i < outtext.length())
     {
-        cout << outtext[i]<< endl;
-        if (czyliczba(outtext[i]) == 1 && (outtext[i+1] == '+' || outtext[i+1] == '-' || outtext[i+1] == '*' || outtext[i+1] == '/' || outtext[i+1] == '^'))
+        if (czyliczba(outtext[i]) == 1 && isoperator(outtext[i+1]) == 1)
         {
             outtext2 = outtext2 + outtext[i] + ' ';
             i = i + 1;
         }
-        else if ((outtext[i] == '+' || outtext[i] == '-' || outtext[i] == '*' || outtext[i] == '/' || outtext[i] == '^') && (outtext[i+1] == '+' || outtext[i+1] == '-' || outtext[i+1] == '*' || outtext[i+1] == '/' || outtext[i+1] == '^'))
+        else if (isoperator(outtext[i]) == 1 && isoperator(outtext[i+1]) == 1)
         {
             outtext2 = outtext2 + outtext[i] + ' ';
             i = i + 1;
         }
-        else if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] == ' ')
+        else if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] == ' ' && outtext[i+3] != ' ')
         {
             outtext2 = outtext2 + outtext[i];
             i = i + 3;
+        }
+        else if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] == ' ' && outtext[i+3] == ' ')
+        {
+            outtext2 = outtext2 + outtext[i];
+            i = i + 4;
         }
         else if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] != ' ')
         {
@@ -245,44 +371,6 @@ string infixToPostfix(string intextin)
             outtext2 = outtext2 + outtext[i];
             i = i + 1;
         }
-        /*
-        if (outtext[i] != ' ')
-        {
-            cout << "Bramka1" <<endl;
-            outtext2 = outtext2 + outtext[i];
-            i = i + 1;
-        }
-        if (outtext[i] == ' ' && outtext[i+1] == ' ')
-        {
-            cout << "Bramka2" <<endl;
-            outtext2 = outtext2 + outtext[i];
-            i = i + 2;
-        }
-        if (outtext[i] == ' ' && outtext[i+1] == ' ' && outtext[i+2] == ' ')
-        {
-            cout << "Bramka3" <<endl;
-            outtext2 = outtext2 + outtext[i];
-            i = i + 3;
-        }
-        if (outtext[i] == ' ' && outtext[i+1] != ' ')
-        {
-            cout << "Bramka4" <<endl;
-            outtext2 = outtext2 + outtext[i];
-            i = i + 1;
-        }
-        if (czyliczba(outtext[i]) == 1 && (outtext[i+1] == '+' || outtext[i+1] == '-' || outtext[i+1] == '*' || outtext[i+1] == '/' || outtext[i+1] == '^'))
-        {
-            cout << "Bramka5" <<endl;
-            outtext2 = outtext2 + outtext[i] + ' ';
-            i = i + 1;
-        }
-        if ((outtext[i] == '+' || outtext[i] == '-' || outtext[i] == '*' || outtext[i] == '/' || outtext[i] == '^') && (outtext[i+1] == '+' || outtext[i+1] == '-' || outtext[i+1] == '*' || outtext[i+1] == '/' || outtext[i+1] == '^'))
-        {
-            cout << "Bramka6" <<endl;
-            outtext2 = outtext2 + outtext[i] + ' ';
-            i = i + 1;
-        }
-        */
     }
     
     cout << "outtext:"<< outtext << endl;
@@ -292,7 +380,13 @@ string infixToPostfix(string intextin)
 
 int main() {
     
-    //infixToPostfix("2 + 2 + 2 * 2 / 2");
-    string exp2 = infixToPostfix("-2 * 2 - 3 * 4 + 2 - 3 * 3");
-    //RPNcalcualtion(exp2);
+    string input = "- 2 ^ 2 * 2 - 3 * 4 + 2 - 3 ^ ( - 3 )";
+    if(incorrectstring(input) == 0)
+    {
+        string exp2 = infixToPostfix(input);
+    }
+    else
+    {
+        cout << "Incorrect string. Please ensure that each symbol or number are separated with space." << endl;
+    }
 }
