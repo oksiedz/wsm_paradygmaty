@@ -1,4 +1,4 @@
-//Converts an infix expression to a postfix expression.
+//https://github.com/oksiedz/wsm_paradygmaty
 
 #include <iostream>
 #include <string>
@@ -492,7 +492,7 @@ void reversepolishnotation(string a)
         cout << "Incorrect equation in Reverse Polish Notation." << endl;
     }
 
-    cout << "Output value from provided input string calculated with usage of infix to postfix transformation and reverse polish notation algorith is equal: " << wskStos -> top() << "."<<endl;
+    cout << "Output value from provided input string calculated with usage of infix to postfix transformation and reverse polish notation algorithm is equal: " << wskStos -> top() << "."<<endl;
     delete wskStos;
 }
 
